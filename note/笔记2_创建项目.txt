@@ -1,0 +1,15 @@
+﻿ 1.创建项目，文件夹下创建package.json文件
+{
+  "name": "socket",
+  "version": "0.0.1",
+  "description": "myproject",
+  "dependencies": {}
+}
+
+2.安装net
+G:\www\nodejs\socket>npm install net --save-dev
+
+
+
+
+进群交流QQ群号: 168108911
