@@ -4,6 +4,7 @@
   "description": "ʵ��webSocket",
   "dependencies": {},
   "devDependencies": {
-    "net": "^1.0.2"
+    "net": "^1.0.2",
+    "ws": "^5.1.0"
   }
 }
