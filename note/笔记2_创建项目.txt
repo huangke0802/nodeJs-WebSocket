@@ -9,7 +9,3 @@
 2.安装net
 G:\www\nodejs\socket>npm install net --save-dev
 
-
-
-
-进群交流QQ群号: 168108911

@@ -18,6 +18,3 @@ wss.on('connection', function(ws) {
 //运行：node --expose-gc WsServer.js   //让global.gc()可以执行   
 
 
-
-
-进群交流QQ群号: 168108911

@@ -28,6 +28,3 @@ ws.onerror = function(err) {
 </html> 
 
 
-
-
-��Ⱥ����QQȺ��: 168108911

@@ -1,12 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=ss, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>socketIoClient</title>
+    <script src="js/jQuery.js"></script>
+    <script src="js/socket.io.js"></script>
+    <script>
+        var iosocket = io.connect("http://localhost:9000/");
+        window.onload = function () {
+
+            //监听连接
+            iosocket.on("connect", function () {
+                alert("连接成功");
+                //向服务端发送消息
+                iosocket.send("hello , 我是ioSocket connect");
+            });
+            //监听服务端发来的消息
+            iosocket.on("message", function (message) {
+                // alert("服务器端传来：" + message);
+                $("#incomingChatMessage").append("<p>"+ message+"</p>");
+            });
+
+            //监听服务端连接断开
+            iosocket.on("disconnect", function () {
+                alert("服务端断开");
+            });
+
+        };
+
+        function say() {
+            iosocket.send(myform.sayinput.value);
+        }
+    </script>
 </head>
+
 <body>
-    <h1>socketIoClient</h1>
+    <h1 style="text-align : center;">socketIo聊天室</h1>
+    <div id="incomingChatMessage" style="margin:10px auto;width:500px;height:400px;overflow:auto;border:1px solid blue;padding:20px"></div>
+    <form name="myform" style="text-align: center;">
+        <input type='text' name='sayinput' />
+        <input type='button' value='say' onclick='say()' />
+    </form>
 </body>
+
 </html>

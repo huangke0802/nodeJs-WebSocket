@@ -45,7 +45,3 @@ function broadcast(message, client) {
 }  
 chatServer.listen(9000); 
 
-
-
-
-进群交流QQ群号: 168108911
