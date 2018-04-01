@@ -1,0 +1,41 @@
+node静态解析protobuf    
+1.安装protobufjs  
+npm install protobufjs@5 -g        //全局安装(node 6.9.x 使用的protobuf.js的版本 5.0.2) 
+npm install protobufjs@5 --save-dev  //安装到本项目下(本地node运行时用到)  
+
+//一般就这样可以了
+npm install protobufjs -g
+npm install protobufjs --save-dev
+
+2.安装pbjs  
+npm install pbjs -g  
+npm install pbjs --save-dev    
+    
+3.user.proto    
+package protobuf;    
+     
+message User {    
+  required int32 uid = 1;    
+  required string uname = 2;    
+  required string pwd = 3;    
+}    
+    
+4.编译:    
+pbjs user.proto -t commonjs > userproto.js    
+    
+5. StaticPb.js   
+var ProtoBuf = require("protobufjs");    
+var User = require('./userproto.js')['protobuf']['User'];    
+var user = new User({    
+        'uid': 101,    
+        'uname': '你好',    
+        'pwd':'haha'    
+    });    
+var buffer = user.encode();//编码    
+console.log('buffer='+buffer);      
+var msgbuf = buffer.toBuffer();//加密    
+console.log('msgbuf='+msgbuf);    
+    
+//--------解码---------------------    
+var userbuf = User.decode(msgbuf);    
+console.log(userbuf.uname);   

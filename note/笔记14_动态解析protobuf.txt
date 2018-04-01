@@ -1,0 +1,59 @@
+node.js动态解析protobuf  
+1.安装protobufjs  
+npm install protobufjs --save-dev  
+安装bytebuffer 
+npm install bytebuffer --save-dev 
+2.编写user.proto  
+package protobuf;  
+message User {  
+  required int32 uid = 1;  
+  required string uname = 2;  
+  required string pwd = 3;  
+} 
+3.新版本动态解析(DynamicPb.js)
+var fs = require("fs"); 
+ProtoBuf = require("protobufjs"); 
+
+ProtoBuf.load('./pb.proto',function(err,root){
+    if(err){
+        console.log(err);
+        return;
+    }
+    User = root.lookup('protobuf.User'); 
+    user = User.create({});
+    /*
+    for(var key in user){
+        console.log(key);
+    }
+    */
+    user.uid=111; 
+    user.uname='123456'; 
+    user.pwd='aabbcc'; 
+    //------------编码---------------- 
+    var buffer = User.encode(user).finish();
+    //------------解码----------------
+    var message = User.decode(buffer);
+
+    console.log(message.uname);
+});
+
+3.老版本动态解析(DynamicPb.js)  
+var fs = require("fs");  
+ProtoBuf = require("protobufjs");  
+userProtoStr = fs.readFileSync('./user.proto').toString();  
+  
+User = ProtoBuf.loadProto(userProtoStr).build('protobuf').User;  
+  
+user= new User();  
+user.set('uid', 111);  
+user.set('uname', '123456');  
+user.set('pwd', 'aabbcc');  
+  
+//------------编码----------------  
+var buffer = user.encode().toBuffer();  
+  
+//------------解码----------------  
+  
+var userInfo = User.decode(buffer);  
+   
+console.log(userInfo.get('uname'));  

@@ -1,0 +1,15 @@
+﻿protocolbuffer(以下简称PB)是google 的一种数据交换的格式，它独立于语言，独立于平台
+它是一个类似JSON的一个传输协议，其实也不能说是协议，只是一个数据传输的东西罢了
+跨语言，这是它的一个优点。它自带了一个编译器，protoc，只需要用它进行编译，可以编译成JAVA、python、C++等代码
+由于它是一种二进制的格式，比使用 xml，json 进行数据交换快许多。可以把它用于分布式应用之间的数据通信或者异构环境下的数据交换。作为一种效率和兼容性都很优秀的二进制数据传输格式，可以用于诸如网络传输、配置文件、数据存储等诸多领域。
+
+
+protocol Buffer是谷歌公司开发的跨语言，二进制，对象化，高效率的传输格式。
+protobuf的主要优点：多语言支持，小，简单，快，比json快10倍。
+
+node中需要安装protobuf模块：
+npm install protobufjs --save-dev
+淘宝镜像使用：
+cnpm install protobufjs --save-dev
+
+创建一个对象文件xxx.proto (user.proto)
