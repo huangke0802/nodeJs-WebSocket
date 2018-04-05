@@ -4,14 +4,26 @@
          port: 9000
      });
 var clientMap = new Object();
+
+var User = require('./userproto.js')['protobuf']['User'];
+var user = new User({});
+
 var index = 0;
  wss.on('connection', function (ws) {
      console.log(ws + '上线');
      ws.name = ++index;
      clientMap[ws.name] = ws;
      ws.on('message', function (message) {
-         console.log('received: %s', message);
+        //  console.log('received: %s', message);
+        //  broadCast(message, ws);
+
+         /* protoBuf传输 */
+         //解析
+         var msg = User.decode(message);
+         console.log('客户端传来:' + msg);
+         console.log("uname : " + msg.uname);
          broadCast(message, ws);
+
      });
      //  ws.send('something');
      ws.on('close', function () {
@@ -29,6 +41,12 @@ var index = 0;
  {
      for(var key in clientMap)
      {
-         clientMap[key].send(socket.name + "说：" + msg);
+         //字符串的发送
+        //  clientMap[key].send(socket.name + "说：" + msg);
+
+        //protobuf的发送
+         clientMap[key].send(msg);
+
+
      }
  }

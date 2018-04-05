@@ -6,10 +6,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>webSocket聊天室</title>
+    <script src="/js/long.min.js"></script>
+    <script src="/js/bytebuffer.min.js"></script>
+    <script src="/js/protobuf.min.js"></script>
+    <script>
+        //写在Wsclient.js前面
+        if (typeof dcodeIO == "undefined" || !dcodeIO.ProtoBuf) {
+            alert("出错");
+            // throw(new Error("ProtoBuf.js is not present. Please "))
+            return;
+        }
+
+        //创建ProtoBuf
+        var ProtoBuf = dcodeIO.ProtoBuf;
+        var UserModel = ProtoBuf.loadProtoFile("./user.proto").build('protobuf.User');
+        user = new UserModel();
+        user.uid = 111;
+        user.uname = 'pwpwpw';
+        user.pwd = 'aaa';
+        alert(user.pwd); 
+        /* 发送代码 */
+        var buffer = user.toArrayBuffer();
+    </script>
     <script src="Wsclient.js"></script>
     <script>
         function say() {
-            ws.send(myform.sayinput.value);
+            //字符串形式的传输
+            // ws.send(myform.sayinput.value);
         }
     </script>
 </head>

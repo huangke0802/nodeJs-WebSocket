@@ -3,6 +3,9 @@ var chatServer = net.createServer(),      //创建服务端Server
     clientList = [];  
     clientMap=new Object();
 
+var User = require('./userproto.js')['protobuf']['User'];
+var user = new User({});
+
 var ii=0;  //连接名称的流水号
 chatServer.on('connection', function(client) {  
 	console.log('有人连上来了')
@@ -20,9 +23,13 @@ chatServer.on('connection', function(client) {
 //    });
 
   client.on('data', function(data) {
-     console.log('客户端传来:'+data);
+      //解析客户端传来的buf
+      var msg = User.decode(data);
+      console.log('客户端传来:' + msg);
      //client.write('你发来:'+data);
-     broadcast(data, client);// 接受来自客户端的信息
+     // 接受来自客户端的信息
+     console.log("uname : " + msg.uname);
+      broadcast(data, client);
   });
   //数据错误事件
     client.on('error',function(exception){
@@ -40,7 +47,8 @@ chatServer.on('connection', function(client) {
 });  
 function broadcast(message, client) {
     for(var key in clientMap){
-        clientMap[key].write(client.name+'say:'+message+'\n');
+        clientMap[key].write( message);
+        // clientMap[key].write(client.name+'say:'+message+'\n');
     }
 }  
 chatServer.listen(9000); 
