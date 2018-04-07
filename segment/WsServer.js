@@ -4,7 +4,7 @@
          port: 9000
      });
 var clientMap = new Object();
-var ProtoBuf = require("protobufjs"); 
+
 var User = require('./userproto.js')['protobuf']['User'];
 var user = new User({});
 

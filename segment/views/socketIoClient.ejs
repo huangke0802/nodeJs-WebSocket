@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=ss, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>socketIoClient</title>
+    <script src="/js/jQuery.js"></script>   
+	<script src="/js/long.min.js"></script>
+    <script src="/js/bytebuffer.min.js"></script>
+    <script src="/js/protobuf.min.js"></script>
+	<script src="/js/socket.io.js"></script>
+    <script>
+        //写在Wsclient.js前面
+        if (typeof dcodeIO == "undefined" || !dcodeIO.ProtoBuf) {
+            alert("出错");
+        }
+
+        //创建ProtoBuf
+        var ProtoBuf = dcodeIO.ProtoBuf;
+        var UserModel = ProtoBuf.loadProtoFile("/js/user.proto").build('protobuf.User');
+        user = new UserModel();
+        user.uid = 111;
+        user.uname = 'pwpwpw';
+        user.pwd = 'aaa';
+        /* 发送代码 */
+		//编码
+        
+		var buffer = user.encode().toBuffer();
+    </script>
+    <script>
+        var iosocket = io.connect("http://localhost:9000/");
+        window.onload = function () {
+
+            //监听连接
+            iosocket.on("connect", function () {
+                //alert("连接成功");
+                //向服务端发送消息
+                //iosocket.send("hello , 我是ioSocket connect");
+				
+				iosocket.send(buffer);
+            });
+            //监听服务端发来的消息
+            iosocket.on("message", function (message) {
+                var msg = UserModel.decode(message);
+                $("#incomingChatMessage").append("<p>" + msg.uname + "</p>");
+            });
+
+            //监听服务端连接断开
+            iosocket.on("disconnect", function () {
+                alert("服务端断开");
+            });
+
+        };
+
+        function say() {
+            //iosocket.send(myform.sayinput.value);
+			
+			user.uname = myform.sayinput.value;
+			iosocket.send(user.encode().toBuffer());
+			
+			myform.sayinput.value = "";
+        }
+    </script>
+</head>
+
+<body>
+    <h1 style="text-align : center;">socketIo聊天室</h1>
+    <div id="incomingChatMessage" style="margin:10px auto;width:500px;height:400px;overflow:auto;border:1px solid blue;padding:20px"></div>
+    <form name="myform" style="text-align: center;">
+        <input type='text' name='sayinput' />
+        <input type='button' value='say' onclick='say()' />
+    </form>
+</body>
+
+</html>
