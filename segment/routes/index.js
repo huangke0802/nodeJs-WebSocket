@@ -14,4 +14,8 @@ router.get('/socketIoClient', function(req, res, next) {
   res.render('socketIoClient');
 });
 
+router.get('/moveSocketIoClient', function (req, res, next){
+  res.render('moveSocketIoClient');
+});
+
 module.exports = router;

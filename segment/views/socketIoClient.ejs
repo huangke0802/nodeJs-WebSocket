@@ -26,10 +26,7 @@
         user.pwd = 'aaa';
         /* 发送代码 */
 		//编码
-        
 		var buffer = user.encode().toBuffer();
-    </script>
-    <script>
         var iosocket = io.connect("http://localhost:9000/");
         window.onload = function () {
 

@@ -1,0 +1,22 @@
+ * {
+     padding: 0;
+     margin: 0;
+ }
+
+ .moveBox {
+     position: absolute;
+     width: 200px;
+     height: 200px;
+ }
+
+ .box1 {
+     background: red;
+ }
+
+ .box2 {
+     background: green;
+ }
+
+ .box3 {
+     background: blue;
+ }
