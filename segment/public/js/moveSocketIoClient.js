@@ -17,6 +17,7 @@ window.onload = function () {
     //监听服务端发来的消息
     iosocket.on("message", function (message) {
         var moveMsg = MoveMsg.decode(message);
+        console.log(moveMsg);
         var typeid = moveMsg.typeid;
         var divid = "d" + moveMsg.divid;
         var movediv = document.getElementById(divid);
